@@ -1,0 +1,9 @@
+﻿##############################################################################
+# This file list all assemblies which contains mapping definition
+##############################################################################
+
+# System framework mapping
+GDNET.Mapping.dll
+
+# Other libraries which contain mapping definitions
+GreatApp.Mapping.dll

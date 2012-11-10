@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5BCC7907-3BF7-4926-86E9-63B05C35E7E3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GDNET.Domain</RootNamespace>
+    <AssemblyName>GDNET.Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\Exceptions\DomainException.cs" />
+    <Compile Include="Base\Exceptions\Managers\BusinessExceptionManager.cs" />
+    <Compile Include="Entities\Management\IEntityHistoryComplex.cs" />
+    <Compile Include="Base\SessionManagement\DomainSessionContext.cs" />
+    <Compile Include="Base\SessionManagement\ISessionContext.cs" />
+    <Compile Include="Entities\ReferenceData\Catalog.cs" />
+    <Compile Include="Entities\ReferenceData\CatalogFactory.cs" />
+    <Compile Include="Entities\ReferenceData\DataLineFactory.cs" />
+    <Compile Include="Entities\ReferenceData\DataLine.cs" />
+    <Compile Include="Entities\ReferenceData\SystemCatalogs.cs" />
+    <Compile Include="Entities\System\TranslationFactory.cs" />
+    <Compile Include="Entities\System\Translation.cs" />
+    <Compile Include="Entities\System\EmployeeFactory.cs" />
+    <Compile Include="Entities\System\Employee.cs" />
+    <Compile Include="Repositories\ReferenceData\ICatalogRepository.cs" />
+    <Compile Include="Repositories\System\ITranslationRepository.cs" />
+    <Compile Include="Services\Security\EncryptionOption.cs" />
+    <Compile Include="Services\Security\IEncryptionService.cs" />
+    <Compile Include="DomainServices.cs" />
+    <Compile Include="Entities\Management\EntityHistoryComplex.cs" />
+    <Compile Include="Entities\Management\EntityLog.cs" />
+    <Compile Include="Entities\Management\EntityHistory.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Base\Exceptions\BusinessException.cs" />
+    <Compile Include="Base\Exceptions\ExceptionsManager.cs" />
+    <Compile Include="Base\Validators\DomainValidator.cs" />
+    <Compile Include="DomainRepositories.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\System\IUserRepository.cs" />
+    <Compile Include="Entities\System\UserFactory.cs" />
+    <Compile Include="Entities\System\User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GDNET.Base\GDNET.Base.csproj">
+      <Project>{BFDFA81D-B84D-4C5C-97D0-F62FE74B13C2}</Project>
+      <Name>GDNET.Base</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,95 @@
+﻿h6
+{
+    margin-top: 5px;
+}
+
+/*********************
+aaaaaaaaaaaaaaaaaaaaaa
+*********************/
+a:link
+{
+    color: #034af3;
+}
+
+a:visited
+{
+    color: #505abc;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+a:active
+{
+    color: #12eb87;
+}
+
+/****************
+*** DIV *********
+****************/
+
+div.normal
+{
+    line-height: 20px;
+}
+
+
+/* FORM LAYOUT ELEMENTS   
+----------------------------------------------------------*/
+
+fieldset
+{
+    border: 0px solid #ddd;
+    padding: 0 1.4em 1.4em 1.4em;
+    margin: 0 0 1.5em 0;
+}
+
+legend
+{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+textarea
+{
+    min-height: 75px;
+    font-size: 1.2em;
+}
+
+input[type="text"], input[type="password"]
+{
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+    width: 200px;
+}
+
+select
+{
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    color: #444;
+}
+
+input[type="submit"]
+{
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+footer
+{
+    padding: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: transparent;
+    color: #CDCDCD;
+    font-size: 110%;
+    text-align: center;
+}

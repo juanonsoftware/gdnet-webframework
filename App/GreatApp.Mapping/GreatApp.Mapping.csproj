@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5C76779D-2F46-4789-9C98-3B68A75DD720}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreatApp.Mapping</RootNamespace>
+    <AssemblyName>GreatApp.Mapping</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\..\Libs\NHibernate\NHibernate-3.3.1.GA-bin\Required_Bins\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ContentItemMapping.cs" />
+    <Compile Include="ContentPartMapping.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\GDNET.Base\GDNET.Base.csproj">
+      <Project>{BFDFA81D-B84D-4C5C-97D0-F62FE74B13C2}</Project>
+      <Name>GDNET.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\GDNET.Domain\GDNET.Domain.csproj">
+      <Project>{5BCC7907-3BF7-4926-86E9-63B05C35E7E3}</Project>
+      <Name>GDNET.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\GDNET.Mapping\GDNET.Mapping.csproj">
+      <Project>{A76D2DB0-0AF7-4AEE-8EC8-77D44DBAE90A}</Project>
+      <Name>GDNET.Mapping</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\GDNET.NHibernate\GDNET.NHibernate.csproj">
+      <Project>{CD582D2C-7AE0-4D4F-8A0B-0EB40A446AB7}</Project>
+      <Name>GDNET.NHibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreatApp.Domain\GreatApp.Domain.csproj">
+      <Project>{985334C9-FAFD-4735-AC1A-57DB51777670}</Project>
+      <Name>GreatApp.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

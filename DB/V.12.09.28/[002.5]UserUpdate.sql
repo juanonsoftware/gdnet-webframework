@@ -1,0 +1,1 @@
+alter table [User] alter column [TotalPoints] [float] NULL;

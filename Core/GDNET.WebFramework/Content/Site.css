@@ -1,0 +1,228 @@
+﻿/*----------------------------------------------------------
+The base color for this template is #5c87b2. If you'd like
+to use a different color start by replacing all instances of
+#5c87b2 with your new color.
+----------------------------------------------------------*/
+
+.site-ctn
+{
+    background-color: #5c87b2 !important;
+}
+
+.site-fl
+{
+    float: left;
+}
+
+.site-fr
+{
+    float: right;
+}
+
+.site-main
+{
+    background-color: White !important;
+}
+.site-add-info
+{
+    color: #696969;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+.site-l10
+{
+    margin-left: 10px;
+}
+
+/* Styles for editor and display helpers
+----------------------------------------------------------*/
+.display-label, .editor-label
+{
+    margin: 1em 0 0 0;
+}
+
+.display-field, .editor-field
+{
+    margin: 0.5em 0 0 0;
+}
+
+.text-box
+{
+    width: 30em;
+}
+
+.text-box.multi-line
+{
+    height: 6.5em;
+}
+
+.tri-state
+{
+    width: 6em;
+}
+
+
+/* MISC  
+----------------------------------------------------------*/
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    color: Red;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+
+
+/**********************************
+--- CSS for content
+**********************************/
+.editor-line
+{
+    float: none;
+    clear: both;
+    padding-top: 10px;
+}
+.input_name
+{
+    width: 300px !important;
+}
+.textarea_tiny, .textarea_content
+{
+    width: 800px;
+    height: 80px;
+    padding: 5px;
+    line-height: 20px;
+}
+.textarea_content
+{
+    height: 200px !important;
+}
+
+
+/**********************************
+--- Repeater default classes
+**********************************/
+.rpt
+{
+    float: none;
+}
+.rpt_header
+{
+    float: left;
+    background-color: Lime;
+    padding-left: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.rpt_header_cell
+{
+    float: left;
+    position: relative;
+    font-weight: bold;
+    width: 300px;
+    padding-right: 5px;
+}
+.rpt_body
+{
+    float: none;
+}
+.rpt_body_line
+{
+    clear: both;
+    padding-left: 2px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.rpt_body_line_even
+{
+    float: left;
+}
+.rpt_body_line_odd
+{
+    float: left;
+}
+.rpt_body_line_even, .rpt_body_line_even_none
+{
+    background-color: #EFEFEF;
+}
+.rpt_body_line_odd, .rpt_body_line_odd_none
+{
+    background-color: #DDDFFF;
+}
+.rpt_body_cell
+{
+    float: left;
+    position: relative;
+    width: 300px;
+    padding-right: 5px;
+}
+
+/***************
+***** Home *****
+****************/
+.rpt_body_cell_home_name
+{
+    float: none;
+    padding-right: 5px;
+    font-weight: bold;
+    font-size: 120%;
+    line-height: 25px;
+    margin-bottom: 5px;
+}
+.rpt_body_cell_home_desc
+{
+    float: none;
+    padding-right: 5px;
+    font-style: italic;
+    font-size: 110%;
+    line-height: 20px;
+}
+
+.rpt_body_line_even_none_focus
+{
+    background-color: #FFFFEE;
+}
+.rpt_body_line_odd_none_focus
+{
+    background-color: #FFFFFE;
+}
+.rpt_body_cell_focus_name_focus
+{
+    float: none;
+    padding-right: 5px;
+    line-height: 25px;
+}
+
