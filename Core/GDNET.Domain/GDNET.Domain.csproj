@@ -50,8 +50,10 @@
     <Compile Include="Entities\System\Translation.cs" />
     <Compile Include="Entities\System\EmployeeFactory.cs" />
     <Compile Include="Entities\System\Employee.cs" />
+    <Compile Include="Repositories\DomainRepositories.cs" />
     <Compile Include="Repositories\ReferenceData\ICatalogRepository.cs" />
     <Compile Include="Repositories\System\ITranslationRepository.cs" />
+    <Compile Include="Services\IBusinessService.cs" />
     <Compile Include="Services\Security\EncryptionOption.cs" />
     <Compile Include="Services\Security\IEncryptionService.cs" />
     <Compile Include="DomainServices.cs" />
@@ -63,7 +65,6 @@
     <Compile Include="Base\Exceptions\BusinessException.cs" />
     <Compile Include="Base\Exceptions\ExceptionsManager.cs" />
     <Compile Include="Base\Validators\DomainValidator.cs" />
-    <Compile Include="DomainRepositories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\System\IUserRepository.cs" />
     <Compile Include="Entities\System\UserFactory.cs" />

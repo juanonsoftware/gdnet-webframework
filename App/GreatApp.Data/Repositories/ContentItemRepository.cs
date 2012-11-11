@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using GDNET.Base;
 using GDNET.NHibernate.Repositories;
-using GDNET.NHibernate.SessionManagement;
 using GreatApp.Domain.Entities;
 using GreatApp.Domain.Repositories;
+using NHibernate;
 using NHibernate.Criterion;
 
 namespace GreatApp.Data.Repositories
@@ -13,8 +13,8 @@ namespace GreatApp.Data.Repositories
     {
         private static readonly ContentItem DefaultContentItem = default(ContentItem);
 
-        public ContentItemRepository(INHibernateRepositoryStrategy strategy)
-            : base(strategy)
+        public ContentItemRepository(ISession session)
+            : base(session)
         {
         }
 

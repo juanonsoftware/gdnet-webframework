@@ -1,20 +1,9 @@
-﻿using GreatApp.Business.Services;
-using GreatApp.Domain;
-using GreatApp.Domain.Services;
-
-namespace GreatApp.Business
+﻿namespace GreatApp.Business
 {
-    public sealed class AppBusinessServices : AppDomainServices
+    /// <summary>
+    /// This class has no method, it's used for marking only
+    /// </summary>
+    public sealed class AppBusinessServices
     {
-        public AppBusinessServices()
-            : base()
-        {
-            base.Initialize(this);
-        }
-
-        protected override IContentBonusService GetContentBonusService()
-        {
-            return new ContentBonusService();
-        }
     }
 }

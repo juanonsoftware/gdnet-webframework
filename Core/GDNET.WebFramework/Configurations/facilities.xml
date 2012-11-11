@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <facilities>
+    <facility
+      id="logging"
+      type="Castle.Facilities.Logging.LoggingFacility, Castle.Facilities.Logging"
+      loggingApi="log4net"
+      configFile="log4net.config"/>
+  </facilities>
+</configuration>

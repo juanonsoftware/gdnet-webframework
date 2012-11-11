@@ -1,6 +1,6 @@
 ﻿using GDNET.Domain.Entities.System;
-using GreatApp.Domain;
 using GreatApp.Domain.Entities;
+using GreatApp.Domain.Repositories;
 using GreatApp.Domain.Services;
 
 namespace GreatApp.Business.Services
@@ -13,6 +13,13 @@ namespace GreatApp.Business.Services
         private const double GroupIV = 15;
         private const double GroupV = 5;
 
+        private readonly IContentItemRepository contentItemRepository;
+
+        public ContentBonusService(IContentItemRepository contentItemRepository)
+        {
+            this.contentItemRepository = contentItemRepository;
+        }
+
         public void CalculateTotalPoints(User user)
         {
             if (user.TotalPoints > 0)
@@ -20,7 +27,7 @@ namespace GreatApp.Business.Services
                 return;
             }
 
-            var listContentItems = AppDomainRepositories.ContentItem.GetAllByAuthor(user.Email);
+            var listContentItems = this.contentItemRepository.GetAllByAuthor(user.Email);
             foreach (ContentItem item in listContentItems)
             {
                 user.AddNewPoints(GroupV);

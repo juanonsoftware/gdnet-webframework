@@ -55,6 +55,7 @@
     <Compile Include="Models\UserDetailsMode.cs" />
     <Compile Include="Models\UserDetailsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\General\ITranslationService.cs" />
     <Compile Include="Services\General\TranslationService.cs" />
     <Compile Include="Services\FrameworkServices.cs" />
   </ItemGroup>

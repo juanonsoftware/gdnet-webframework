@@ -8,8 +8,8 @@ using GDNET.WebInfrastructure.Controllers.Base;
 using GDNET.WebInfrastructure.Models.PageModels;
 using GDNET.WebInfrastructure.Models.System;
 using GDNET.WebInfrastructure.Services;
-using GreatApp.Domain;
 using GreatApp.Domain.Entities;
+using GreatApp.Domain.Repositories;
 using GreatApp.Infrastructure.Models;
 
 namespace GDNET.WebInfrastructure.Controllers
@@ -22,6 +22,14 @@ namespace GDNET.WebInfrastructure.Controllers
         private const string SearchBy = "by";
         private const string SearchValue = "value";
         private const string SearchAuthor = "author";
+
+        private readonly IContentItemRepository contentItemRepository = null;
+
+        public SearchController(IContentItemRepository contentItemRepository)
+            : base()
+        {
+            this.contentItemRepository = contentItemRepository;
+        }
 
         public ActionResult Index()
         {
@@ -48,10 +56,10 @@ namespace GDNET.WebInfrastructure.Controllers
                 var authorModel = InfrastructureServices.AccountModels.GetUserModel<UserDetailsModel>(author);
                 authorModel.DisplayMode = UserDetailsMode.Search;
 
-                var topItems = AppDomainRepositories.ContentItem.GetTopWithActiveByAuthor(DefaultPageSize, author.Email);
+                var topItems = this.contentItemRepository.GetTopWithActiveByAuthor(DefaultPageSize, author.Email);
                 var topModels = FrameworkExtensions.ConvertAll<ContentItemModel, ContentItem>(topItems, true);
 
-                var focusItems = AppDomainRepositories.ContentItem.GetTopWithActiveByViews(FocusItemSize);
+                var focusItems = this.contentItemRepository.GetTopWithActiveByViews(FocusItemSize);
                 var focusModels = FrameworkExtensions.ConvertAll<ContentItemModel, ContentItem>(focusItems, true);
 
                 model.NewItems = topModels;

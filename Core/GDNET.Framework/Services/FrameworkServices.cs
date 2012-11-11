@@ -2,11 +2,30 @@
 
 namespace GDNET.Framework.Services
 {
-    public sealed class FrameworkServices
+    /// <summary>
+    /// This class has no method, it's used for marking only
+    /// </summary>
+    public abstract class FrameworkServices
     {
-        public static TranslationService Translation
+        protected static FrameworkServices _instance = null;
+
+        public FrameworkServices()
         {
-            get { return new TranslationService(); }
         }
+
+        protected void Initialize(FrameworkServices instance)
+        {
+            _instance = instance;
+        }
+
+        public static ITranslationService Translation
+        {
+            get
+            {
+                return _instance.GetTranslationService();
+            }
+        }
+
+        protected abstract ITranslationService GetTranslationService();
     }
 }

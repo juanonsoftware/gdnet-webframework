@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/SiteAdmin.Master"
     Inherits="System.Web.Mvc.ViewPage<ContentPartModel>" %>
 
-<%@ Import Namespace="GDNET.WebInfrastructure.Models.Content" %>
+<%@ Import Namespace="GreatApp.Infrastructure.Models" %>
 <asp:Content ID="C1" ContentPlaceHolderID="TitleContent" runat="server">
     <%: base.Html.Translate(base.Model.IsCreation ? "GUI.ContentAdmin.ContentPart.Title.Creation" : "GUI.ContentAdmin.ContentPart.Title.Modification")%>
 </asp:Content>

@@ -3,7 +3,7 @@ using Elixis;
 using Elixis.EncryptionOptions;
 using GDNET.Domain.Base.Exceptions;
 using GDNET.Domain.Services.Security;
-using GDNET.Utils;
+using GDNET.Base.Utils;
 
 namespace GDNET.Business.Services.Impl.Security
 {

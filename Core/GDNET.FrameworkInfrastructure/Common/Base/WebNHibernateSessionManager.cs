@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Web.Hosting;
+using GDNET.NHibernate.Helpers;
 using GDNET.NHibernate.Interceptors;
 using GDNET.NHibernate.SessionManagement;
 using NHibernate.Cfg;
@@ -33,7 +34,7 @@ namespace GDNET.WebInfrastructure.Common.Base
 
         protected override void BuildSessionFactory()
         {
-            this.BuildConfiguration(new EntityWithModificationInterceptor());
+            base.Configuration = ConfigurationAssistant.BuildConfiguration(this.mappingAssemblies, this.hibernateConfiguration, this.ApplicationDirectory, new EntityWithModificationInterceptor());
             _sessionFactory = base.Configuration.CurrentSessionContext<WebSessionContext>().BuildSessionFactory();
         }
 

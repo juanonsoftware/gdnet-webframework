@@ -1,23 +1,9 @@
-﻿using GDNET.NHibernate.SessionManagement;
-using GreatApp.Data.Repositories;
-using GreatApp.Domain;
-using GreatApp.Domain.Repositories;
-
-namespace GreatApp.Data
+﻿namespace GreatApp.Data
 {
-    public sealed class AppDataRepositories : AppDomainRepositories
+    /// <summary>
+    /// This class has no method, it's used for marking only
+    /// </summary>
+    public sealed class AppDataRepositories
     {
-        private INHibernateRepositoryStrategy repositoryStrategy = null;
-
-        public AppDataRepositories(INHibernateRepositoryStrategy strategy)
-        {
-            this.repositoryStrategy = strategy;
-            base.Initialize(this);
-        }
-
-        protected override IContentItemRepository GetContentItemRepository()
-        {
-            return new ContentItemRepository(this.repositoryStrategy);
-        }
     }
 }

@@ -3,14 +3,14 @@ using GDNET.Base;
 using GDNET.Domain.Entities.System;
 using GDNET.Domain.Repositories.System;
 using GDNET.NHibernate.Repositories;
-using GDNET.NHibernate.SessionManagement;
+using NHibernate;
 
 namespace GDNET.Data.Repositories.System
 {
     public class UserRepository : AbstractRepository<User, Guid>, IUserRepository
     {
-        public UserRepository(INHibernateRepositoryStrategy strategy)
-            : base(strategy)
+        public UserRepository(ISession session)
+            : base(session)
         {
         }
 

@@ -50,12 +50,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GDNET.Utils\GDNET.Utils.csproj">
-      <Project>{132BB8B1-1578-4FE8-8E8E-52CE06C464FE}</Project>
-      <Name>GDNET.Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Extensions\ScriptTemplates\ajax.js" />
     <EmbeddedResource Include="Extensions\ScriptTemplates\ready.js" />
   </ItemGroup>
@@ -64,6 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Extensions\ScriptTemplates\autoComplete.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GDNET.Base\GDNET.Base.csproj">
+      <Project>{BFDFA81D-B84D-4C5C-97D0-F62FE74B13C2}</Project>
+      <Name>GDNET.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

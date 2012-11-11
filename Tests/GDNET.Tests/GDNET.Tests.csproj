@@ -57,10 +57,6 @@
       <Project>{8DD4ABCD-BF2F-459C-8D12-01A89750E7F2}</Project>
       <Name>GDNET.WebInfrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\GDNET.Utils\GDNET.Utils.csproj">
-      <Project>{132BB8B1-1578-4FE8-8E8E-52CE06C464FE}</Project>
-      <Name>GDNET.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

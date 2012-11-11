@@ -3,14 +3,14 @@ using GDNET.Base;
 using GDNET.Domain.Entities.System;
 using GDNET.Domain.Repositories.ReferenceData;
 using GDNET.NHibernate.Repositories;
-using GDNET.NHibernate.SessionManagement;
+using NHibernate;
 
 namespace GDNET.Data.Repositories.System
 {
     public class CatalogRepository : AbstractRepository<Catalog, Guid>, ICatalogRepository
     {
-        public CatalogRepository(INHibernateRepositoryStrategy strategy)
-            : base(strategy)
+        public CatalogRepository(ISession session)
+            : base(session)
         {
         }
 

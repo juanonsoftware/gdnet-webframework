@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using System.Web.Mvc;
-using GDNET.Utils;
+using GDNET.Base.Utils;
 
 namespace GDNET.Web.Extensions
 {

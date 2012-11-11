@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using GDNET.Domain.Repositories;
-using GreatApp.Infrastructure.Models;
-using GreatApp.Domain;
 using GreatApp.Domain.Entities;
+using GreatApp.Domain.Repositories;
+using GreatApp.Infrastructure.Models;
 
 namespace GreatApp.Infrastructure.Services
 {
-    public class ContentModelsService
+    public class ContentModelsService : IContentModelsService
     {
+        private readonly IContentItemRepository contentItemRepository = null;
+
+        public ContentModelsService(IContentItemRepository contentItemRepository)
+        {
+            this.contentItemRepository = contentItemRepository;
+        }
+
         #region ContentItem
 
         public ContentItemModel GetContentItemModel(string id)
@@ -29,7 +36,7 @@ namespace GreatApp.Infrastructure.Services
 
             if (Guid.TryParse(id, out guid))
             {
-                ContentItem ci = AppDomainRepositories.ContentItem.GetById(guid);
+                ContentItem ci = this.contentItemRepository.GetById(guid);
                 if (ci != null)
                 {
                     if ((filterActiveOnly == false) || ci.IsActive)
@@ -106,7 +113,7 @@ namespace GreatApp.Infrastructure.Services
             ContentPart cp = null;
             Guid guid = new Guid(contentItemId);
 
-            ContentItem ci = AppDomainRepositories.ContentItem.GetById(guid);
+            ContentItem ci = this.contentItemRepository.GetById(guid);
             if (ci != null)
             {
                 cp = ci.GetPart(new Guid(contentPartId));

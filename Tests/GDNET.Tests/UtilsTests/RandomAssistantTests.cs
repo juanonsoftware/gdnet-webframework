@@ -1,5 +1,5 @@
 ﻿using System;
-using GDNET.Utils;
+using GDNET.Base.Utils;
 using NUnit.Framework;
 
 namespace GDNET.Tests.UtilsTests

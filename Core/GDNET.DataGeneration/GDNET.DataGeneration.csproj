@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor">
+      <HintPath>..\..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\..\Libs\NHibernate\NHibernate-3.3.1.GA-bin\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
@@ -47,13 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ContentAssistant.cs" />
-    <Compile Include="Helpers\SystemAssistant.cs" />
     <Compile Include="Interceptors\DataGenerationModificationInterceptor.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\ContentService.cs" />
+    <Compile Include="Services\SystemService.cs" />
     <Compile Include="SessionManagement\DataGenerationNHibernateSessionManager.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -71,6 +77,14 @@
       <Project>{F28887AD-6D90-44D0-9DAD-83571CA49539}</Project>
       <Name>GDNET.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GDNET.CastleConfiguration\GDNET.CastleConfiguration.csproj">
+      <Project>{25335776-80A5-4586-B931-272DF329C73F}</Project>
+      <Name>GDNET.CastleConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GDNET.CastleIntergration\GDNET.CastleIntergration.csproj">
+      <Project>{50496C16-1E54-4D6A-9A14-16C6061236D2}</Project>
+      <Name>GDNET.CastleIntergration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GDNET.Data\GDNET.Data.csproj">
       <Project>{3BFF9CA5-483A-490A-A446-A8EA1D64FCC5}</Project>
       <Name>GDNET.Data</Name>
@@ -87,10 +101,6 @@
       <Project>{CD582D2C-7AE0-4D4F-8A0B-0EB40A446AB7}</Project>
       <Name>GDNET.NHibernate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GDNET.Utils\GDNET.Utils.csproj">
-      <Project>{132BB8B1-1578-4FE8-8E8E-52CE06C464FE}</Project>
-      <Name>GDNET.Utils</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\hibernate.cfg.xml">
@@ -100,6 +110,9 @@
     <Content Include="App_Data\MappingAssemblies.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,13 +1,20 @@
 ﻿using System.Threading;
-using GDNET.Domain.Repositories;
+using GDNET.Domain.Repositories.System;
 
 namespace GDNET.Framework.Services.General
 {
-    public sealed class TranslationService
+    public class TranslationService : ITranslationService
     {
+        private readonly ITranslationRepository translationRepository = null;
+
+        public TranslationService(ITranslationRepository translationRepository)
+        {
+            this.translationRepository = translationRepository;
+        }
+
         public string GetByKeyword(string keyword)
         {
-            string value = DomainRepositories.Translation.GetValueByKeyword(keyword, Thread.CurrentThread.CurrentUICulture);
+            string value = this.translationRepository.GetValueByKeyword(keyword, Thread.CurrentThread.CurrentUICulture);
             return string.IsNullOrEmpty(value) ? string.Format("! {0} !", keyword) : value;
         }
     }

@@ -40,6 +40,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ConfigurationAssistant.cs" />
     <Compile Include="Interceptors\EntityWithModificationInterceptor.cs" />
     <Compile Include="Mapping\IEntityMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,10 +60,6 @@
     <ProjectReference Include="..\GDNET.Domain\GDNET.Domain.csproj">
       <Project>{5BCC7907-3BF7-4926-86E9-63B05C35E7E3}</Project>
       <Name>GDNET.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GDNET.Utils\GDNET.Utils.csproj">
-      <Project>{132BB8B1-1578-4FE8-8E8E-52CE06C464FE}</Project>
-      <Name>GDNET.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

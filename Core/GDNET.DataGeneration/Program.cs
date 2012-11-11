@@ -1,11 +1,13 @@
 ﻿using System;
-using GDNET.Business;
-using GDNET.Data;
+using Castle.Windsor;
+using Castle.Windsor.Configuration.Interpreters;
+using Castle.Windsor.Installer;
+using GDNET.CastleConfiguration;
+using GDNET.CastleIntergration;
 using GDNET.Data.Base;
-using GDNET.DataGeneration.Helpers;
+using GDNET.DataGeneration.Services;
 using GDNET.DataGeneration.SessionManagement;
 using GDNET.Domain.Repositories;
-using NHibernate;
 
 namespace GDNET.DataGeneration
 {
@@ -13,26 +15,29 @@ namespace GDNET.DataGeneration
     {
         static void Main(string[] args)
         {
-            var sessionStrategy = new DataRepositoryStrategy(DataGenerationNHibernateSessionManager.Instance);
-            var repositories = new DataRepositories(sessionStrategy);
-            var servicesManager = new BusinessServices();
+            RegisterDependencies();
+
+            var repositories = new CoreRepositories();
 
             var user = DomainRepositories.User.FindByEmail("admin@webframework.com");
             var sessionContext = new DataSessionContext(user);
 
-            DataGenerationNHibernateSessionManager.Instance.BeginTransaction();
-            ISession currentSession = DataGenerationNHibernateSessionManager.Instance.GetSession();
-
             // Users
-            SystemAssistant.GenerateUsers();
+            SystemService.GenerateUsers();
 
             // Contents
-            ContentAssistant.GenerateContentItems();
+            ContentService.GenerateContentItems();
 
             DataGenerationNHibernateSessionManager.Instance.CommitTransaction();
 
             Console.WriteLine();
             Console.Write("Finished...");
+        }
+
+        private static void RegisterDependencies()
+        {
+            IocAssistant.Container = new WindsorContainer(new XmlInterpreter());
+            IocAssistant.Container.Install(FromAssembly.InThisApplication());
         }
     }
 }

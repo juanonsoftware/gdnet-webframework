@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
-using GreatApp.Domain;
+using GreatApp.Domain.Repositories;
 
 namespace GDNET.WebInfrastructure.WebServices
 {
@@ -14,6 +14,13 @@ namespace GDNET.WebInfrastructure.WebServices
     [ScriptService]
     public class AppServiceImpl : WebService
     {
+        private readonly IContentItemRepository contentItemRepository = null;
+
+        public AppServiceImpl(IContentItemRepository contentItemRepository)
+            : base()
+        {
+        }
+
         [WebMethod(true)]
         public string Hello()
         {
@@ -34,7 +41,7 @@ namespace GDNET.WebInfrastructure.WebServices
             switch (requestInfo.Operator)
             {
                 case AppServiceOperator.SearchContent:
-                    var listContentItems = AppDomainRepositories.ContentItem.SearchTopWithActive(requestInfo.MaxRows, requestInfo.Query);
+                    var listContentItems = this.contentItemRepository.SearchTopWithActive(requestInfo.MaxRows, requestInfo.Query);
                     foreach (var contentItem in listContentItems)
                     {
                         var dto = new DataItemDTO()

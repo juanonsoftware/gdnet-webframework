@@ -4,7 +4,7 @@ using GDNET.Base;
 using GDNET.Domain.Entities.System;
 using GDNET.Domain.Repositories.System;
 using GDNET.NHibernate.Repositories;
-using GDNET.NHibernate.SessionManagement;
+using NHibernate;
 
 namespace GDNET.Data.Repositories.System
 {
@@ -12,8 +12,8 @@ namespace GDNET.Data.Repositories.System
     {
         private const Translation DefaultTranslation = default(Translation);
 
-        public TranslationRepository(INHibernateRepositoryStrategy strategy)
-            : base(strategy)
+        public TranslationRepository(ISession session)
+            : base(session)
         {
         }
 

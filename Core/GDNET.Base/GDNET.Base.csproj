@@ -51,6 +51,12 @@
     <Compile Include="EntityWithModificationMeta.cs" />
     <Compile Include="ExpressionAssistant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\Base64Assistant.cs" />
+    <Compile Include="Utils\EnumAssistant.cs" />
+    <Compile Include="Utils\FormatterAssistant.cs" />
+    <Compile Include="Utils\GuidAssistant.cs" />
+    <Compile Include="Utils\RandomAssistant.cs" />
+    <Compile Include="Utils\ReflectionAssistant.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

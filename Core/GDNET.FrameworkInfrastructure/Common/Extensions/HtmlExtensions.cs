@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using GDNET.Domain.Repositories;
 using GDNET.Framework.Services;
-using GDNET.Utils;
+using GDNET.Base.Utils;
 using GreatApp.Infrastructure.Models;
 
 namespace GDNET.WebInfrastructure.Common.Extensions

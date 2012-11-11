@@ -31,8 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\Libs\Logging\Log4Net\log4net.dll</HintPath>
+    <Reference Include="Castle.Core, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Core.3.1.0\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Facilities.Logging">
+      <HintPath>..\..\packages\Castle.LoggingFacility.3.1.0\lib\net40\Castle.Facilities.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Services.Logging.Log4netIntegration">
+      <HintPath>..\..\packages\Castle.Core-log4net.3.1.0\lib\net40\Castle.Services.Logging.Log4netIntegration.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=3.1.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Castle.Windsor.3.1.0\lib\net40\Castle.Windsor.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.1.2.10\lib\2.0\log4net.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\..\Libs\NHibernate\NHibernate-3.3.1.GA-bin\Required_Bins\NHibernate.dll</HintPath>
@@ -50,9 +62,10 @@
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Base\GDNETHttpApplication.cs" />
+    <Compile Include="Impl\GDNETHttpApplication.cs" />
     <Compile Include="Common\Base\LanguageRouteConstraint.cs" />
     <Compile Include="Common\Base\NHibernateSessionPerRequestModule.cs" />
     <Compile Include="Common\Base\WebNHibernateSessionManager.cs" />
@@ -60,6 +73,7 @@
     <Compile Include="Common\Extensions\NumberExtensions.cs" />
     <Compile Include="Common\Extensions\HtmlCookieExtensions.cs" />
     <Compile Include="Common\GlobalSettings.cs" />
+    <Compile Include="Impl\WebFrameworkServices.cs" />
     <Compile Include="Controllers\Base\AbstractController.cs" />
     <Compile Include="Controllers\Extensions\ControllerAssistant.cs" />
     <Compile Include="Controllers\Base\AbstractListController.cs" />
@@ -70,6 +84,8 @@
     <Compile Include="Controllers\Extensions\ListControllers.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Installers\ControllersInstaller.cs" />
+    <Compile Include="Installers\BusinessServicesInstaller.cs" />
     <Compile Include="Models\PageModels\AccountChangePasswordModel.cs" />
     <Compile Include="Models\PageModels\AccountUpdateDetailsModel.cs" />
     <Compile Include="Models\PageModels\AccountLogOnModel.cs" />
@@ -93,6 +109,10 @@
     <Compile Include="WebServices\DataItemDTO.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\App\GreatApp.Business\GreatApp.Business.csproj">
+      <Project>{7E99A634-E33D-4711-AE3E-2FCA4597B0D2}</Project>
+      <Name>GreatApp.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\App\GreatApp.Data\GreatApp.Data.csproj">
       <Project>{C1801154-23B8-4D93-B797-5F3BD0B719B1}</Project>
       <Name>GreatApp.Data</Name>
@@ -117,6 +137,14 @@
       <Project>{F28887AD-6D90-44D0-9DAD-83571CA49539}</Project>
       <Name>GDNET.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\GDNET.CastleConfiguration\GDNET.CastleConfiguration.csproj">
+      <Project>{25335776-80A5-4586-B931-272DF329C73F}</Project>
+      <Name>GDNET.CastleConfiguration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GDNET.CastleIntergration\GDNET.CastleIntergration.csproj">
+      <Project>{50496C16-1E54-4D6A-9A14-16C6061236D2}</Project>
+      <Name>GDNET.CastleIntergration</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GDNET.Data\GDNET.Data.csproj">
       <Project>{3BFF9CA5-483A-490A-A446-A8EA1D64FCC5}</Project>
       <Name>GDNET.Data</Name>
@@ -133,16 +161,14 @@
       <Project>{CD582D2C-7AE0-4D4F-8A0B-0EB40A446AB7}</Project>
       <Name>GDNET.NHibernate</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GDNET.Utils\GDNET.Utils.csproj">
-      <Project>{132BB8B1-1578-4FE8-8E8E-52CE06C464FE}</Project>
-      <Name>GDNET.Utils</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GDNET.Web\GDNET.Web.csproj">
       <Project>{68AEDCB6-A54D-4591-9787-0372ACCC0FA1}</Project>
       <Name>GDNET.Web</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

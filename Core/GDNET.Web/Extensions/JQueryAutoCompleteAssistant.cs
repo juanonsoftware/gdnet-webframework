@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using GDNET.Utils;
+using GDNET.Base.Utils;
 
 namespace GDNET.Web.Extensions
 {

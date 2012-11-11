@@ -1,13 +1,9 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Reflection;
+using GDNET.NHibernate.Helpers;
 using GDNET.NHibernate.Interceptors;
-using GDNET.NHibernate.Mapping;
-using GDNET.Utils;
-using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
-using NHibernate.Mapping.ByCode;
 
 namespace GDNET.NHibernate.SessionManagement
 {
@@ -58,57 +54,13 @@ namespace GDNET.NHibernate.SessionManagement
 
         protected virtual void BuildSessionFactory()
         {
-            this.BuildConfiguration(new EntityWithModificationInterceptor());
+            base.Configuration = ConfigurationAssistant.BuildConfiguration(this.mappingAssemblies, this.hibernateConfiguration, this.ApplicationDirectory, new EntityWithModificationInterceptor());
             _sessionFactory = base.Configuration.CurrentSessionContext<CallSessionContext>().BuildSessionFactory();
         }
 
         protected virtual string ApplicationDirectory
         {
             get { return Directory.GetCurrentDirectory(); }
-        }
-
-        protected virtual void BuildConfiguration(params IInterceptor[] interceptors)
-        {
-            var mapper = this.BuildModelMapper(mappingAssemblies);
-            base.Configuration = new Configuration();
-
-            if (File.Exists(hibernateConfiguration))
-            {
-                base.Configuration.Configure(hibernateConfiguration);
-            }
-
-            if (mapper != null)
-            {
-                base.Configuration.AddDeserializedMapping(mapper.CompileMappingForAllExplicitlyAddedEntities(), string.Empty);
-            }
-
-            foreach (var interceptor in interceptors)
-            {
-                base.Configuration.SetInterceptor(interceptor);
-            }
-        }
-
-        private ModelMapper BuildModelMapper(string mappingAssembliesFile)
-        {
-            var mapper = new ModelMapper();
-
-            if (File.Exists(mappingAssembliesFile))
-            {
-                foreach (string line in File.ReadAllLines(mappingAssembliesFile).Where(x => this.ValidatedLine(x)))
-                {
-                    string assemblyFullPath = Path.Combine(this.ApplicationDirectory, line);
-                    var asm = Assembly.LoadFile(assemblyFullPath);
-                    var listeMappingTypes = ReflectionAssistant.GetTypesImplementedInterfaceOnAssembly(typeof(IEntityMapping), asm);
-                    mapper.AddMappings(listeMappingTypes);
-                }
-            }
-
-            return mapper;
-        }
-
-        private bool ValidatedLine(string line)
-        {
-            return !(string.IsNullOrEmpty(line) || line.StartsWith("#"));
         }
     }
 }

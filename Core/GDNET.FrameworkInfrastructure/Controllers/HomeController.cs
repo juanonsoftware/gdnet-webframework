@@ -9,22 +9,32 @@ using GDNET.WebInfrastructure.Controllers.Extensions;
 using GDNET.WebInfrastructure.Models.PageModels;
 using GDNET.WebInfrastructure.Models.System;
 using GDNET.WebInfrastructure.Services;
-using GreatApp.Domain;
 using GreatApp.Domain.Entities;
-using GreatApp.Infrastructure;
+using GreatApp.Domain.Repositories;
 using GreatApp.Infrastructure.Models;
+using GreatApp.Infrastructure.Services;
 
 namespace GDNET.WebInfrastructure.Controllers
 {
     [CaptureException]
     public class HomeController : AbstractController
     {
+        private readonly IContentItemRepository contentItemRepository;
+        private readonly IContentModelsService contentModelsService;
+
+        public HomeController(IContentItemRepository contentItemRepository, IContentModelsService contentModelsService)
+            : base()
+        {
+            this.contentItemRepository = contentItemRepository;
+            this.contentModelsService = contentModelsService;
+        }
+
         public ActionResult Index()
         {
-            var listContentItems = AppDomainRepositories.ContentItem.GetTopWithActive(GlobalSettings.DefaultPageSize);
+            var listContentItems = this.contentItemRepository.GetTopWithActive(GlobalSettings.DefaultPageSize);
             var listItems = FrameworkExtensions.ConvertAll<ContentItemModel, ContentItem>(listContentItems, true);
 
-            var focusItems = AppDomainRepositories.ContentItem.GetTopWithActiveByViews(GlobalSettings.FocusItemSize);
+            var focusItems = this.contentItemRepository.GetTopWithActiveByViews(GlobalSettings.FocusItemSize);
             var focusModels = FrameworkExtensions.ConvertAll<ContentItemModel, ContentItem>(focusItems, true);
 
             HomeIndexModel model = new HomeIndexModel()
@@ -41,13 +51,13 @@ namespace GDNET.WebInfrastructure.Controllers
 
         public ActionResult Details(string id)
         {
-            ContentItemModel contentModel = AppInfrastructureServices.ContentModels.GetContentItemModel(id, true, true);
+            ContentItemModel contentModel = this.contentModelsService.GetContentItemModel(id, true, true);
             if (contentModel == null)
             {
                 return base.RedirectToAction(ControllerAssistant.GetActionName(() => this.Index()));
             }
 
-            var focusItems = AppDomainRepositories.ContentItem.GetTopWithActiveByViews(GlobalSettings.FocusItemSize, new Guid(id));
+            var focusItems = this.contentItemRepository.GetTopWithActiveByViews(GlobalSettings.FocusItemSize, new Guid(id));
             var focusModels = FrameworkExtensions.ConvertAll<ContentItemModel, ContentItem>(focusItems, true);
 
             var authorModel = InfrastructureServices.AccountModels.GetUserModelByEmail<UserDetailsModel>(contentModel.CreatedBy);

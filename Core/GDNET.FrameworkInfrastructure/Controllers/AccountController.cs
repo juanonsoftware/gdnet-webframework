@@ -10,8 +10,8 @@ using GDNET.WebInfrastructure.Controllers.Extensions;
 using GDNET.WebInfrastructure.Models.PageModels;
 using GDNET.WebInfrastructure.Models.System;
 using GDNET.WebInfrastructure.Services;
-using GreatApp.Domain;
 using GreatApp.Domain.Entities;
+using GreatApp.Domain.Repositories;
 using GreatApp.Infrastructure.Models;
 
 namespace GDNET.WebInfrastructure.Controllers
@@ -19,6 +19,14 @@ namespace GDNET.WebInfrastructure.Controllers
     [CaptureException]
     public class AccountController : AbstractController
     {
+        private readonly IContentItemRepository contentItemRepository = null;
+
+        public AccountController(IContentItemRepository contentItemRepository)
+            : base()
+        {
+            this.contentItemRepository = contentItemRepository;
+        }
+
         private ActionResult RedirectToHomeIndex()
         {
             var homeController = default(HomeController);
@@ -35,7 +43,7 @@ namespace GDNET.WebInfrastructure.Controllers
             {
                 userModel.DisplayMode = UserDetailsMode.AccountWatch;
 
-                var topContents = AppDomainRepositories.ContentItem.GetTopWithActiveByAuthor(GlobalSettings.DefaultPageSize, userModel.Email);
+                var topContents = this.contentItemRepository.GetTopWithActiveByAuthor(GlobalSettings.DefaultPageSize, userModel.Email);
                 var topModels = FrameworkExtensions.ConvertAll<ContentItemModel, ContentItem>(topContents, true);
 
                 pageModel.UserDetails = userModel;

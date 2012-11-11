@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Web;
+using GDNET.Business;
+using GDNET.CastleConfiguration;
 using GDNET.Data.Base;
 using GDNET.Domain.Repositories;
+using GDNET.WebInfrastructure.Impl;
 
 namespace GDNET.WebInfrastructure.Common.Base
 {
@@ -30,6 +33,9 @@ namespace GDNET.WebInfrastructure.Common.Base
                 currentUserEmail = this.context.User.Identity.Name;
             }
 
+            new CoreRepositories();
+            new WebFrameworkServices();
+            new BusinessServices();
             var currentUser = DomainRepositories.User.FindByEmail(currentUserEmail);
             var sessionContext = new DataSessionContext(currentUser);
         }
