@@ -3,7 +3,7 @@ using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
 
-namespace GDNET.NHibernate.SessionManagement
+namespace GDNET.CastleIntergration.SessionManagement
 {
     public abstract class AbstractNHibernateSessionManager : INHibernateSessionManager
     {

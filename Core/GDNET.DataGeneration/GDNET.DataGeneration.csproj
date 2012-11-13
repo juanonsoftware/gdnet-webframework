@@ -97,10 +97,6 @@
       <Project>{A76D2DB0-0AF7-4AEE-8EC8-77D44DBAE90A}</Project>
       <Name>GDNET.Mapping</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GDNET.NHibernate\GDNET.NHibernate.csproj">
-      <Project>{CD582D2C-7AE0-4D4F-8A0B-0EB40A446AB7}</Project>
-      <Name>GDNET.NHibernate</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\hibernate.cfg.xml">

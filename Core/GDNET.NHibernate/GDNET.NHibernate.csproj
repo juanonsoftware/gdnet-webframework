@@ -40,18 +40,11 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Helpers\ConfigurationAssistant.cs" />
-    <Compile Include="Interceptors\EntityWithModificationInterceptor.cs" />
-    <Compile Include="Mapping\IEntityMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\AbstractRepository.cs" />
-    <Compile Include="SessionManagement\ApplicationNHibernateSessionManager.cs" />
-    <Compile Include="SessionManagement\AbstractNHibernateRepositoryStrategy.cs" />
-    <Compile Include="SessionManagement\INHibernateSessionManager.cs" />
-    <Compile Include="SessionManagement\INHibernateRepositoryStrategy.cs" />
-    <Compile Include="SessionManagement\AbstractNHibernateSessionManager.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GDNET.Base\GDNET.Base.csproj">
       <Project>{BFDFA81D-B84D-4C5C-97D0-F62FE74B13C2}</Project>

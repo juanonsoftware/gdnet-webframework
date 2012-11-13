@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using GDNET.Base;
+using GDNET.Base.Utils;
 
 namespace GDNET.Mapping.Common
 {

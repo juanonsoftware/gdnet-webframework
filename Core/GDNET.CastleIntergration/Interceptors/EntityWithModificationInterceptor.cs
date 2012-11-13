@@ -2,11 +2,10 @@
 using System.Linq;
 using GDNET.Base;
 using GDNET.Base.DomainAbstraction;
-using GDNET.Domain.Base.SessionManagement;
 using NHibernate;
 using NHibernate.Type;
 
-namespace GDNET.NHibernate.Interceptors
+namespace GDNET.CastleIntergration.Interceptors
 {
     public class EntityWithModificationInterceptor : EmptyInterceptor
     {
@@ -68,16 +67,21 @@ namespace GDNET.NHibernate.Interceptors
             }
         }
 
+        /// <summary>
+        /// TODO: Need to implement they way to get current user's email
+        /// </summary>
+        /// <returns></returns>
         protected virtual string GetEmailCurrentUser()
         {
-            if (DomainSessionContext.Instance.CurrentUser == null)
-            {
-                return string.Empty;
-            }
-            else
-            {
-                return DomainSessionContext.Instance.CurrentUser.Email;
-            }
+            return string.Empty;
+            //if (DomainSessionContext.Instance.CurrentUser == null)
+            //{
+            //    return string.Empty;
+            //}
+            //else
+            //{
+            //    return DomainSessionContext.Instance.CurrentUser.Email;
+            //}
         }
     }
 }

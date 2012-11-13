@@ -1,4 +1,5 @@
 ﻿using GDNET.Base.DomainAbstraction;
+using GDNET.Base.Utils;
 
 namespace GDNET.Base
 {

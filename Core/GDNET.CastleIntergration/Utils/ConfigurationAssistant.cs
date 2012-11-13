@@ -1,13 +1,13 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Reflection;
+using GDNET.Base.DomainAbstraction;
 using GDNET.Base.Utils;
-using GDNET.NHibernate.Mapping;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Mapping.ByCode;
 
-namespace GDNET.NHibernate.Helpers
+namespace GDNET.CastleIntergration.Utils
 {
     public static class ConfigurationAssistant
     {

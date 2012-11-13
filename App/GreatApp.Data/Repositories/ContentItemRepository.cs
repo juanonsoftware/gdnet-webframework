@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using GDNET.Base;
-using GDNET.NHibernate.Repositories;
+using GDNET.Base.Utils;
+using GDNET.Data.Base;
 using GreatApp.Domain.Entities;
 using GreatApp.Domain.Repositories;
 using NHibernate;

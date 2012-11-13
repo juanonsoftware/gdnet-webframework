@@ -1,9 +1,10 @@
 ﻿using System;
 using GDNET.Base;
+using GDNET.Base.DomainAbstraction;
+using GDNET.Base.Utils;
 using GDNET.Domain.Entities.System.Management;
 using GDNET.Mapping.Base;
 using GDNET.Mapping.Common;
-using GDNET.NHibernate.Mapping;
 using NHibernate.Mapping.ByCode;
 
 namespace GDNET.Mapping.System.Management

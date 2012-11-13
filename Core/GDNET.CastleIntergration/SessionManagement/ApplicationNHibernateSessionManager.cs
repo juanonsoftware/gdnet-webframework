@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using System.Reflection;
-using GDNET.NHibernate.Helpers;
-using GDNET.NHibernate.Interceptors;
+using GDNET.CastleIntergration.Interceptors;
+using GDNET.CastleIntergration.Utils;
 using NHibernate.Cfg;
 using NHibernate.Context;
 
-namespace GDNET.NHibernate.SessionManagement
+namespace GDNET.CastleIntergration.SessionManagement
 {
     public class ApplicationNHibernateSessionManager : AbstractNHibernateSessionManager
     {

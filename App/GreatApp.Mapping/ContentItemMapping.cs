@@ -1,8 +1,8 @@
 ﻿using System;
-using GDNET.Base;
+using GDNET.Base.DomainAbstraction;
+using GDNET.Base.Utils;
 using GDNET.Mapping.Base;
 using GDNET.Mapping.Common;
-using GDNET.NHibernate.Mapping;
 using GreatApp.Domain.Entities;
 using NHibernate.Mapping.ByCode;
 

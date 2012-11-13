@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
-using GDNET.Base;
+using GDNET.Base.Utils;
+using GDNET.Data.Base;
 using GDNET.Domain.Entities.System;
 using GDNET.Domain.Repositories.System;
-using GDNET.NHibernate.Repositories;
 using NHibernate;
 
 namespace GDNET.Data.Repositories.System

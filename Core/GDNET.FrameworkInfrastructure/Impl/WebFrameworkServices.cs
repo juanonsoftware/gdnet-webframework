@@ -1,4 +1,4 @@
-﻿using GDNET.CastleIntergration;
+﻿using GDNET.CastleIntergration.Utils;
 using GDNET.Framework.Services;
 using GDNET.Framework.Services.General;
 

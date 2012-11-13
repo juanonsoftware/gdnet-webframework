@@ -5,7 +5,7 @@ using System.Web.Routing;
 using GDNET.Domain.Entities.System.ReferenceData;
 using GDNET.Domain.Repositories;
 
-namespace GDNET.WebInfrastructure.Common.Base
+namespace GDNET.WebInfrastructure.Common
 {
     public class LanguageRouteConstraint : IRouteConstraint
     {

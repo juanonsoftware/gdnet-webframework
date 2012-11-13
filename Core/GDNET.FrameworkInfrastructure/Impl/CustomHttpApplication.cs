@@ -4,16 +4,16 @@ using System.Web.Routing;
 using Castle.Windsor;
 using Castle.Windsor.Configuration.Interpreters;
 using Castle.Windsor.Installer;
-using GDNET.CastleIntergration;
 using GDNET.CastleIntergration.Mvc;
+using GDNET.CastleIntergration.Utils;
 using GDNET.Framework.Extensions;
-using GDNET.WebInfrastructure.Common.Base;
+using GDNET.WebInfrastructure.Common;
 using GDNET.WebInfrastructure.Common.Handlers;
 using log4net.Config;
 
 namespace GDNET.WebInfrastructure.Impl
 {
-    public class GDNETHttpApplication : HttpApplication
+    public class CustomHttpApplication : HttpApplication
     {
         protected void Application_Start()
         {

@@ -2,8 +2,8 @@
 using System.Web.Hosting;
 using Castle.MicroKernel.Facilities;
 using Castle.MicroKernel.Registration;
-using GDNET.NHibernate.Helpers;
-using GDNET.NHibernate.Interceptors;
+using GDNET.CastleIntergration.Interceptors;
+using GDNET.CastleIntergration.Utils;
 using NHibernate;
 
 namespace GDNET.CastleIntergration.Facilities

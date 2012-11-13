@@ -1,6 +1,6 @@
 ﻿using NHibernate;
 
-namespace GDNET.NHibernate.SessionManagement
+namespace GDNET.CastleIntergration.SessionManagement
 {
     public interface INHibernateSessionManager
     {

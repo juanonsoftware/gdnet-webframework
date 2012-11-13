@@ -3,7 +3,7 @@ using Castle.Windsor;
 using Castle.Windsor.Configuration.Interpreters;
 using Castle.Windsor.Installer;
 using GDNET.CastleConfiguration;
-using GDNET.CastleIntergration;
+using GDNET.CastleIntergration.Utils;
 using GDNET.Data.Base;
 using GDNET.DataGeneration.Services;
 using GDNET.DataGeneration.SessionManagement;

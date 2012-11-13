@@ -4,13 +4,12 @@ using System.Linq;
 using GDNET.Base.DomainAbstraction;
 using GDNET.Base.DomainRepository;
 using GDNET.Domain.Base.Validators;
-using GDNET.NHibernate.SessionManagement;
 using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using Expressions = System.Linq.Expressions;
 
-namespace GDNET.NHibernate.Repositories
+namespace GDNET.Data.Base
 {
     public abstract class AbstractRepository<TEntity, TId> : IRepositoryBase<TEntity, TId> where TEntity : IEntityT<TId>
     {
@@ -25,11 +24,6 @@ namespace GDNET.NHibernate.Repositories
         public AbstractRepository(ISession session)
         {
             this.Session = session;
-        }
-
-        public AbstractRepository(INHibernateRepositoryStrategy strategy)
-        {
-            this.Session = strategy.Session;
         }
 
         #endregion

@@ -41,6 +41,7 @@
     <Compile Include="DomainAbstraction\AbstractEntityWithModificationT.cs" />
     <Compile Include="DomainAbstraction\AbstractEntityWithCreationT.cs" />
     <Compile Include="DomainAbstraction\IEntity.cs" />
+    <Compile Include="DomainAbstraction\IEntityMapping.cs" />
     <Compile Include="DomainAbstraction\IEntityT.cs" />
     <Compile Include="DomainAbstraction\IEntityWithCreation.cs" />
     <Compile Include="DomainAbstraction\IEntityWithModification.cs" />
@@ -49,7 +50,7 @@
     <Compile Include="DomainRepository\IRepositoryGlass.cs" />
     <Compile Include="DomainRepository\IRepositoryStrategy.cs" />
     <Compile Include="EntityWithModificationMeta.cs" />
-    <Compile Include="ExpressionAssistant.cs" />
+    <Compile Include="Utils\ExpressionAssistant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Base64Assistant.cs" />
     <Compile Include="Utils\EnumAssistant.cs" />

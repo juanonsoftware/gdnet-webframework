@@ -65,10 +65,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\GDNETHttpApplication.cs" />
-    <Compile Include="Common\Base\LanguageRouteConstraint.cs" />
-    <Compile Include="Common\Base\NHibernateSessionPerRequestModule.cs" />
-    <Compile Include="Common\Base\WebNHibernateSessionManager.cs" />
+    <Compile Include="Impl\CustomHttpApplication.cs" />
+    <Compile Include="Common\LanguageRouteConstraint.cs" />
+    <Compile Include="Impl\SystemPerRequestModule.cs" />
     <Compile Include="Common\Extensions\FrameworkJQueryAssistant.cs" />
     <Compile Include="Common\Extensions\NumberExtensions.cs" />
     <Compile Include="Common\Extensions\HtmlCookieExtensions.cs" />
@@ -156,10 +155,6 @@
     <ProjectReference Include="..\GDNET.Framework\GDNET.Framework.csproj">
       <Project>{BF7096F3-9BB0-4CE7-B211-94F6AC675758}</Project>
       <Name>GDNET.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GDNET.NHibernate\GDNET.NHibernate.csproj">
-      <Project>{CD582D2C-7AE0-4D4F-8A0B-0EB40A446AB7}</Project>
-      <Name>GDNET.NHibernate</Name>
     </ProjectReference>
     <ProjectReference Include="..\GDNET.Web\GDNET.Web.csproj">
       <Project>{68AEDCB6-A54D-4591-9787-0372ACCC0FA1}</Project>

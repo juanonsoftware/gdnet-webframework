@@ -1,7 +1,7 @@
 ﻿using System;
+using GDNET.Base.DomainAbstraction;
 using GDNET.Domain.Entities.System;
 using GDNET.Mapping.Base;
-using GDNET.NHibernate.Mapping;
 
 namespace GDNET.Mapping.System
 {

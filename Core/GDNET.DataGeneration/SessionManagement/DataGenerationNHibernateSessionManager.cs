@@ -1,4 +1,4 @@
-﻿using GDNET.NHibernate.SessionManagement;
+﻿using GDNET.CastleIntergration.SessionManagement;
 
 namespace GDNET.DataGeneration.SessionManagement
 {

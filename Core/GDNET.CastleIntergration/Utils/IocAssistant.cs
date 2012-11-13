@@ -1,6 +1,6 @@
 ﻿using Castle.Windsor;
 
-namespace GDNET.CastleIntergration
+namespace GDNET.CastleIntergration.Utils
 {
     public static class IocAssistant
     {

@@ -1,4 +1,4 @@
-﻿using GDNET.NHibernate.Interceptors;
+﻿using GDNET.CastleIntergration.Interceptors;
 
 namespace GDNET.DataGeneration.Interceptors
 {

@@ -1,4 +1,4 @@
-﻿using GDNET.CastleIntergration;
+﻿using GDNET.CastleIntergration.Utils;
 using GDNET.Domain.Repositories;
 using GDNET.Domain.Repositories.ReferenceData;
 using GDNET.Domain.Repositories.System;

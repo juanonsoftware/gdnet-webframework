@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using GDNET.Base.Utils;
-using GDNET.CastleIntergration;
+using GDNET.CastleIntergration.Utils;
 using GDNET.Domain.Entities.System;
 using GDNET.Domain.Entities.System.ReferenceData;
 using GDNET.Domain.Repositories;

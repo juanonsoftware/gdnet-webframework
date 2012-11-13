@@ -31,12 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NHibernate, Version=3.3.1.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libs\NHibernate\NHibernate-3.3.1.GA-bin\Required_Bins\NHibernate.dll</HintPath>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\..\Libs\NHibernate\NHibernate-3.3.1.GA-bin\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\..\Libs\Testing\NUnit\V2.5.9\net-2.0\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\Libs\Testing\NUnit\V2.5.9\net-2.0\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -54,33 +53,25 @@
     <Compile Include="System\UserTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GDNET.Base\GDNET.Base.csproj">
+    <ProjectReference Include="..\..\Core\GDNET.Base\GDNET.Base.csproj">
       <Project>{BFDFA81D-B84D-4C5C-97D0-F62FE74B13C2}</Project>
       <Name>GDNET.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GDNET.Business\GDNET.Business.csproj">
+    <ProjectReference Include="..\..\Core\GDNET.Business\GDNET.Business.csproj">
       <Project>{F28887AD-6D90-44D0-9DAD-83571CA49539}</Project>
       <Name>GDNET.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GDNET.Data\GDNET.Data.csproj">
+    <ProjectReference Include="..\..\Core\GDNET.Data\GDNET.Data.csproj">
       <Project>{3BFF9CA5-483A-490A-A446-A8EA1D64FCC5}</Project>
       <Name>GDNET.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GDNET.Domain\GDNET.Domain.csproj">
+    <ProjectReference Include="..\..\Core\GDNET.Domain\GDNET.Domain.csproj">
       <Project>{5BCC7907-3BF7-4926-86E9-63B05C35E7E3}</Project>
       <Name>GDNET.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GDNET.Mapping\GDNET.Mapping.csproj">
+    <ProjectReference Include="..\..\Core\GDNET.Mapping\GDNET.Mapping.csproj">
       <Project>{A76D2DB0-0AF7-4AEE-8EC8-77D44DBAE90A}</Project>
       <Name>GDNET.Mapping</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GDNET.NHibernate\GDNET.NHibernate.csproj">
-      <Project>{CD582D2C-7AE0-4D4F-8A0B-0EB40A446AB7}</Project>
-      <Name>GDNET.NHibernate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\GDNET.Utils\GDNET.Utils.csproj">
-      <Project>{132BB8B1-1578-4FE8-8E8E-52CE06C464FE}</Project>
-      <Name>GDNET.Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
