@@ -10,31 +10,29 @@ namespace GDNET.CastleIntergration.Facilities
 {
     public class NHibernateFacility : AbstractFacility
     {
-        private static string MappingAssemblies = HostingEnvironment.MapPath("~/App_Data/MappingAssemblies.txt");
-        private static string HibernateConfiguration = HostingEnvironment.MapPath("~/App_Data/hibernate.cfg.xml");
-        private static string ApplicationDirectory = Path.Combine(HostingEnvironment.MapPath("~/"), "bin");
+        private static string _mappingAssemblies = HostingEnvironment.MapPath("~/App_Data/MappingAssemblies.txt");
+        private static string _hibernateConfiguration = HostingEnvironment.MapPath("~/App_Data/hibernate.cfg.xml");
+        private static string _applicationDirectory = Path.Combine(HostingEnvironment.MapPath("~/"), "bin");
 
         public NHibernateFacility()
-            : base()
         {
         }
 
         public NHibernateFacility(string mappingAssemblies, string hibernateConfiguration, string applicationDirectory)
-            : base()
         {
-            MappingAssemblies = mappingAssemblies;
-            HibernateConfiguration = hibernateConfiguration;
-            ApplicationDirectory = applicationDirectory;
+            _mappingAssemblies = mappingAssemblies;
+            _hibernateConfiguration = hibernateConfiguration;
+            _applicationDirectory = applicationDirectory;
         }
 
         protected override void Init()
         {
             var modificationInterceptor = new EntityWithModificationInterceptor();
-            var nhConfig = ConfigurationAssistant.BuildConfiguration(MappingAssemblies, HibernateConfiguration, ApplicationDirectory, modificationInterceptor);
+            var nhConfig = ConfigurationAssistant.BuildConfiguration(_mappingAssemblies, _hibernateConfiguration, _applicationDirectory, modificationInterceptor);
 
-            base.Kernel.Register(
+            Kernel.Register(
                 Component.For<ISessionFactory>()
-                    .UsingFactoryMethod(() => nhConfig.BuildSessionFactory()),
+                    .UsingFactoryMethod(nhConfig.BuildSessionFactory),
                 Component.For<ISession>()
                     .UsingFactoryMethod(k => k.Resolve<ISessionFactory>().OpenSession())
                     .LifestylePerWebRequest()

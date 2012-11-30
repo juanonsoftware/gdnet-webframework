@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GDNET.Base.Common;
 using GDNET.Base.DomainAbstraction;
 using GDNET.Base.DomainRepository;
 using GDNET.Domain.Base.Validators;
@@ -8,6 +9,8 @@ using NHibernate;
 using NHibernate.Criterion;
 using NHibernate.Linq;
 using Expressions = System.Linq.Expressions;
+using NHOrder = NHibernate.Criterion.Order;
+using Order = GDNET.Base.Common.Order;
 
 namespace GDNET.Data.Base
 {
@@ -16,7 +19,7 @@ namespace GDNET.Data.Base
         protected ISession Session
         {
             get;
-            set;
+            private set;
         }
 
         #region Ctors
@@ -47,33 +50,33 @@ namespace GDNET.Data.Base
             return query.ToList();
         }
 
-        protected IList<TEntity> GetAll(int limit, ICriterion criterion, Order order)
+        protected IList<TEntity> GetAll(int limit, ICriterion criterion, NHOrder order)
         {
-            return this.GetAll(limit, new List<ICriterion> { criterion }, new List<Order> { order });
+            return this.GetAll(limit, new List<ICriterion> { criterion }, new List<NHOrder> { order });
         }
 
-        protected IList<TEntity> GetAll(int limit, IList<ICriterion> criterions, IList<Order> orders)
+        protected IList<TEntity> GetAll(int limit, IList<ICriterion> criterions, IList<NHOrder> orders)
         {
             return this.GetAll(limit, criterions, true, orders);
         }
 
-        protected IList<TEntity> GetAll(int limit, IList<ICriterion> criterions, bool andConditions, IList<Order> orders)
+        protected IList<TEntity> GetAll(int limit, IList<ICriterion> criterions, bool andConditions, IList<NHOrder> orders)
         {
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).SetCacheable(true);
+            var criteria = CreateCriteria().SetCacheable(true);
             criteria.SetMaxResults(limit);
 
             if (criterions != null)
             {
                 if (andConditions)
                 {
-                    criterions.ForEach(x => { criteria.Add(x); });
+                    criterions.ForEach(x => criteria.Add(x));
                 }
                 else if (criterions.Count > 0)
                 {
                     var criterionFinal = criterions[0];
                     for (int count = 1; count < criterions.Count; count++)
                     {
-                        criterionFinal = Expression.Or(criterionFinal, criterions[count]);
+                        criterionFinal = Restrictions.Or(criterionFinal, criterions[count]);
                     }
 
                     criteria.Add(criterionFinal);
@@ -82,7 +85,7 @@ namespace GDNET.Data.Base
 
             if (orders != null)
             {
-                orders.ForEach(y => { criteria.AddOrder(y); });
+                orders.ForEach(y => criteria.AddOrder(y));
             }
 
             return criteria.List<TEntity>();
@@ -99,14 +102,13 @@ namespace GDNET.Data.Base
 
         public virtual TEntity GetById(TId id)
         {
-            TEntity result = this.Session.Get<TEntity>(id);
-            return result;
+            return this.Session.Get<TEntity>(id);
         }
 
-        public TEntity GetByProperty(string propertyName, object value)
+        public TEntity GetByProperty(Filter filter)
         {
-            var entities = this.FindByProperty(propertyName, value, 0, 1);
-            return (entities.Count == 1) ? entities[0] : default(TEntity);
+            var entities = this.FindByProperty(filter, new PageInfo(1, 0));
+            return (entities.Items.Length == 1) ? entities.Items[0] : default(TEntity);
         }
 
         #endregion
@@ -115,56 +117,37 @@ namespace GDNET.Data.Base
 
         public virtual IList<TEntity> GetAll()
         {
-            return this.GetAll(0, 0);
+            return Session.Query<TEntity>().Cacheable().ToList();
         }
 
         /// <summary>
         /// Gets all entities (of TEntity type) from data store. We ignore paging condition if page & pageSize are equal 0.
         /// </summary>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        public virtual IList<TEntity> GetAll(int page, int pageSize)
+        /// <param name="limit">Limit number of items to be fetched</param>
+        public virtual Page<TEntity> GetAll(PageInfo limit)
         {
-            var query = this.Session.Query<TEntity>().Cacheable();
-            if (!(page == 0 && pageSize == 0))
-            {
-                query = query.Skip(page * pageSize).Take(pageSize);
-            }
-            return query.ToList();
-        }
+            var entitiesCount = CreateCriteria().SetProjection(Projections.RowCount()).FutureValue<int>();
+            var entities = CreateCriteria().SetFirstResult(limit.From).SetFetchSize(limit.Size).SetCacheable(true).Future<TEntity>();
 
-        public virtual IList<TEntity> GetAll(int page, int pageSize, out int totalRows)
-        {
-            var query = this.Session.Query<TEntity>().Cacheable();
-            totalRows = query.Count();
-
-            if (!(page == 0 && pageSize == 0))
-            {
-                query = query.Skip(page * pageSize).Take(pageSize);
-            }
-            return query.ToList();
+            return new Page<TEntity>(entities, limit, entitiesCount.Value);
         }
 
         public virtual IList<TEntity> GetTopByProperty(int limit, string orderByProperty)
         {
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).SetCacheable(true);
-            criteria.AddOrder(new Order(orderByProperty, false));
+            var criteria = CreateCriteria().AddOrder(new Order(orderByProperty, false).ToNhOrder());
             criteria.SetFirstResult(0).SetMaxResults(limit);
 
             return criteria.List<TEntity>();
         }
 
-        public virtual IList<TEntity> GetTopByProperty(int limit, string orderByProperty, IList<string> filterProperties, IList<object> filterValues)
+        public virtual IList<TEntity> GetTopByProperty(int limit, string orderByProperty, params Filter[] filters)
         {
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).SetCacheable(true);
-
-            for (int counter = 0; counter < filterProperties.Count; counter++)
+            var criteria = CreateCriteria().AddOrder(new Order(orderByProperty, false).ToNhOrder())
+                                           .SetFirstResult(0).SetMaxResults(limit);
+            foreach (var filter in filters)
             {
-                criteria.Add(Expression.Eq(filterProperties[counter], filterValues[counter]));
+                criteria.Add(Restrictions.Eq(filter.By, filter.Value));
             }
-
-            criteria.AddOrder(new Order(orderByProperty, false));
-            criteria.SetFirstResult(0).SetMaxResults(limit);
 
             return criteria.List<TEntity>();
         }
@@ -173,42 +156,37 @@ namespace GDNET.Data.Base
 
         #region FindByProperty Methods
 
-        public virtual IList<TEntity> FindByProperties(string[] properties, object[] values)
+        public virtual IList<TEntity> FindByProperties(params Filter[] filters)
         {
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).SetCacheable(true);
-            for (int counter = 0; counter < properties.Length; counter++)
+            var criteria = CreateCriteria().SetCacheable(true);
+            foreach (var filter in filters)
             {
-                criteria.Add(Expression.Eq(properties[counter], values[counter]));
+                criteria.Add(Restrictions.Eq(filter.By, filter.Value));
             }
 
             return criteria.List<TEntity>();
         }
 
-        public virtual IList<TEntity> FindByProperties(string[] properties, object[] values, int page, int pageSize)
+        public virtual Page<TEntity> FindByProperties(PageInfo info, params Filter[] filters)
         {
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).SetCacheable(true);
-            for (int counter = 0; counter < properties.Length; counter++)
+            var criteriaEntities = CreateCriteria().SetFirstResult(info.From).SetFetchSize(info.Size);
+            foreach (var filter in filters)
             {
-                criteria.Add(Expression.Eq(properties[counter], values[counter]));
+                criteriaEntities.Add(Restrictions.Eq(filter.By, filter.Value));
             }
 
-            if (!(page == 0 && pageSize == 0))
-            {
-                criteria = criteria.SetFirstResult(page * pageSize).SetFetchSize(pageSize);
-            }
+            var entities = criteriaEntities.Future<TEntity>();
+            var entitiesCount = CreateCriteria().SetProjection(Projections.RowCount()).FutureValue<int>();
 
-            return criteria.List<TEntity>();
+            return new Page<TEntity>(entities, info, entitiesCount.Value);
         }
 
         /// <summary>
         /// Retrieves a collection of entities based on the name and value of a property.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        public IList<TEntity> FindByProperty(string property, object value)
+        public Page<TEntity> FindByProperty(Filter filter)
         {
-            return this.FindByProperty(property, value, 0, 0);
+            return this.FindByProperty(filter, new PageInfo(int.MaxValue, 0));
         }
 
         /// <summary>
@@ -219,92 +197,46 @@ namespace GDNET.Data.Base
         /// <param name="values">The value of the property.</param>
         public virtual IList<TEntity> FindByProperty(string property, object[] values)
         {
-            DomainValidator.Instance.NullOrEmptyException(property);
+            DomainValidator.NullOrEmptyException(property);
 
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).Add(Expression.In(property, values)).SetCacheable(true);
+            var criteria = CreateCriteria().Add(Restrictions.In(property, values)).SetCacheable(true);
             return criteria.List<TEntity>();
         }
 
         /// <summary>
         /// Retrieves a collection of entities based on the name and value of a property.
+        /// We ignore paging condition if page & pageSize are equ.al 0.
+        /// </summary>
+        public virtual Page<TEntity> FindByProperty(Filter filter, PageInfo page)
+        {
+            var criteria = CreateCriteria().Add(Restrictions.Eq(filter.By, filter.Value));
+            var entities = criteria.SetFirstResult(page.From).SetMaxResults(page.Size).Future<TEntity>();
+            var entitiesCount = CreateCriteria().SetProjection(Projections.RowCount()).FutureValue<int>();
+
+            return new Page<TEntity>(entities, page, entitiesCount.Value);
+        }
+
+        /// <summary>
+        /// Retrieves a collection of entities based on the name and value of a property.
+        /// </summary>
+        public IList<TEntity> FindByProperty(Filter filter, Order order)
+        {
+            return this.FindByProperty(filter, order, new PageInfo(int.MaxValue, 0));
+        }
+
+        /// <summary>
+        /// Retrieves a collection of entities based on the name and value of a property.
         /// We ignore paging condition if page & pageSize are equal 0.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        public virtual IList<TEntity> FindByProperty(string property, object value, int page, int pageSize)
+        public IList<TEntity> FindByProperty(Filter filter, Order order, PageInfo paging)
         {
-            DomainValidator.Instance.NullOrEmptyException(property);
-
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).Add(Expression.Eq(property, value));
-            if (!(page == 0 && pageSize == 0))
-            {
-                criteria = criteria.SetFirstResult(page * pageSize).SetMaxResults(pageSize);
-            }
+            var criteria = CreateCriteria().Add(Restrictions.Eq(filter.By, filter.Value));
+            criteria.AddOrder(order.ToNhOrder());
+            criteria.SetFirstResult(paging.From).SetFetchSize(paging.Size);
 
             return criteria.SetCacheable(true).List<TEntity>();
         }
 
-        /// <summary>
-        /// Retrieves a collection of entities based on the name and value of a property.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        public IList<TEntity> FindByProperty(string property, object value, string orderByProperty)
-        {
-            return this.FindByProperty(property, value, orderByProperty, true, 0, 0);
-        }
-
-        /// <summary>
-        /// Retrieves a collection of entities based on the name and value of a property.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        public IList<TEntity> FindByProperty(string property, object value, string orderByProperty, bool isAsc)
-        {
-            return this.FindByProperty(property, value, orderByProperty, isAsc, 0, 0);
-        }
-
-        /// <summary>
-        /// Retrieves a collection of entities based on the name and value of a property.
-        /// We ignore paging condition if page & pageSize are equal 0.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        public IList<TEntity> FindByProperty(string property, object value, string orderByProperty, int page, int pageSize)
-        {
-            return this.FindByProperty(property, value, orderByProperty, true, 0, 0);
-        }
-
-        /// <summary>
-        /// Retrieves a collection of entities based on the name and value of a property.
-        /// We ignore paging condition if page & pageSize are equal 0.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        public virtual IList<TEntity> FindByProperty(string property, object value, string orderByProperty, bool isAsc, int page, int pageSize)
-        {
-            var orderBy = new Order(orderByProperty, isAsc);
-            var criteria = this.Session.CreateCriteria(typeof(TEntity)).Add(Expression.Eq(property, value));
-            criteria = criteria.AddOrder(orderBy);
-
-            if ((page != 0) || (pageSize != 0))
-            {
-                criteria = criteria.SetFirstResult(page * pageSize).SetMaxResults(pageSize);
-            }
-
-            return criteria.SetCacheable(true).List<TEntity>();
-        }
 
         #endregion
 
@@ -312,56 +244,34 @@ namespace GDNET.Data.Base
 
         public bool Save(TEntity entity)
         {
-            DomainValidator.Instance.NullException(entity);
+            DomainValidator.NullException(entity);
 
-            if (this.RepositoryGlass != null)
+            if (RepositoryGlass != null)
             {
-                this.RepositoryGlass.ValidateOnCreation(entity);
+                RepositoryGlass.ValidateOnCreation(entity);
             }
-
-            // Saving entity
-            this.Session.SaveOrUpdate(entity);
+            Session.SaveOrUpdate(entity);
 
             return true;
         }
 
         public bool Save(IList<TEntity> entities)
         {
-            DomainValidator.Instance.NullException(entities);
-
-            foreach (var e in entities)
-            {
-                if (!this.Save(e))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            DomainValidator.NullException(entities);
+            return entities.All(Save);
         }
 
         public bool Update(TEntity entity)
         {
-            DomainValidator.Instance.NullException(entity);
-
-            this.Session.SaveOrUpdate(entity);
-
+            DomainValidator.NullException(entity);
+            Session.SaveOrUpdate(entity);
             return true;
         }
 
         public bool Update(IList<TEntity> entities)
         {
-            DomainValidator.Instance.NullException(entities);
-
-            foreach (var e in entities)
-            {
-                if (!this.Update(e))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            DomainValidator.NullException(entities);
+            return entities.All(Update);
         }
 
         #endregion
@@ -370,19 +280,23 @@ namespace GDNET.Data.Base
 
         public bool Delete(TId id)
         {
-            TEntity entity = this.LoadById(id);
-            return this.Delete(entity);
+            return Delete(LoadById(id));
         }
 
         public bool Delete(TEntity entity)
         {
-            DomainValidator.Instance.NullException(entity);
-            this.Session.Delete(entity);
+            DomainValidator.NullException(entity);
+            Session.Delete(entity);
 
             return true;
         }
 
         #endregion
+
+        private ICriteria CreateCriteria()
+        {
+            return Session.CreateCriteria(typeof(TEntity));
+        }
 
         #endregion
 

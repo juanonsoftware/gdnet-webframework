@@ -1,1 +1,1 @@
-﻿<%@ Application Inherits="GDNET.WebInfrastructure.Impl.GDNETHttpApplication" Language="C#" %>
+﻿<%@ Application Inherits="GDNET.WebInfrastructure.Impl.CustomHttpApplication" Language="C#" %>

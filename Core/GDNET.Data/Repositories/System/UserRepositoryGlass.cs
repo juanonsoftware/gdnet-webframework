@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using GDNET.Base.Common;
 using GDNET.Base.DomainRepository;
 using GDNET.Base.Utils;
 using GDNET.Domain.Base.Exceptions;
@@ -11,25 +13,22 @@ namespace GDNET.Data.Repositories.System
     {
         public override void ValidateOnCreation(User entity)
         {
-            string propertyEmail = ExpressionAssistant.GetPropertyName(() => entity.Email);
-            var listUsersByEmail = DomainRepositories.User.FindByProperty(propertyEmail, entity.Email);
-            if (listUsersByEmail.Count > 0)
+            var propertyEmail = ExpressionAssistant.GetPropertyName(() => entity.Email);
+            var usersByEmail = DomainRepositories.User.FindByProperty(new Filter(propertyEmail, entity.Email));
+            if (usersByEmail.HasItems())
             {
-                ExceptionsManager.BusinessException.Throw("");
+                ExceptionsManager.BusinessException.Throw("This email address is in used.");
             }
         }
 
         public override void ValidateOnModification(User entity)
         {
-            string propertyEmail = ExpressionAssistant.GetPropertyName(() => entity.Email);
-            var listUsersByEmail = DomainRepositories.User.FindByProperty(propertyEmail, entity.Email);
+            var propertyEmail = ExpressionAssistant.GetPropertyName(() => entity.Email);
+            var usersByEmail = DomainRepositories.User.FindByProperty(new Filter(propertyEmail, entity.Email));
 
-            foreach (var user in listUsersByEmail)
+            if (usersByEmail.Items.Count(u => u.Id != entity.Id) > 0)
             {
-                if (user.Id != entity.Id)
-                {
-                    ExceptionsManager.BusinessException.Throw("");
-                }
+                ExceptionsManager.BusinessException.Throw("This email address is in used by other user.");
             }
         }
     }

@@ -4,38 +4,16 @@ namespace GDNET.Domain.Base.Validators
 {
     public sealed class DomainValidator
     {
-        #region Singleton
-
-        private DomainValidator() { }
-
-        private class Nested
+        public static void NullException(object objet)
         {
-            public static readonly DomainValidator instance = new DomainValidator();
+            if (objet != null) return;
+            throw new DomainException(string.Empty);
         }
 
-        public static DomainValidator Instance
+        public static void NullOrEmptyException(string objet)
         {
-            get { return Nested.instance; }
-        }
-
-        #endregion
-
-        public void NullException(object objet)
-        {
-            if (objet == null)
-            {
-                string message = string.Empty;
-                throw new DomainException(message);
-            }
-        }
-
-        public void NullOrEmptyException(string objet)
-        {
-            if (string.IsNullOrEmpty(objet))
-            {
-                string message = string.Empty;
-                throw new DomainException(message);
-            }
+            if (!string.IsNullOrEmpty(objet)) return;
+            throw new DomainException(string.Empty);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace GDNET.CastleIntergration.Utils
 
         public static T Resolve<T>()
         {
-            return IocAssistant.Container.Resolve<T>();
+            return Container.Resolve<T>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using GDNET.Base.Common;
 using GDNET.Base.Utils;
 using GDNET.Data.Base;
 using GDNET.Domain.Entities.System;
@@ -9,6 +10,8 @@ namespace GDNET.Data.Repositories.System
 {
     public class CatalogRepository : AbstractRepository<Catalog, Guid>, ICatalogRepository
     {
+        private static readonly Catalog DefaultCatalog = default(Catalog);
+
         public CatalogRepository(ISession session)
             : base(session)
         {
@@ -16,11 +19,9 @@ namespace GDNET.Data.Repositories.System
 
         public Catalog FindByCode(string code)
         {
-            var defaultCatalog = default(Catalog);
-            string codeProperty = ExpressionAssistant.GetPropertyName(() => defaultCatalog.Code);
-
-            var listOfCatalogs = base.FindByProperty(codeProperty, code);
-            return (listOfCatalogs.Count > 0 ? listOfCatalogs[0] : null);
+            var codeProperty = ExpressionAssistant.GetPropertyName(() => DefaultCatalog.Code);
+            var catalogs = base.FindByProperty(new Filter(codeProperty, code));
+            return (catalogs.Items.Length > 0 ? catalogs.Items[0] : null);
         }
     }
 }

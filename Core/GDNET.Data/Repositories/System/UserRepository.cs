@@ -1,4 +1,5 @@
 ﻿using System;
+using GDNET.Base.Common;
 using GDNET.Base.Utils;
 using GDNET.Data.Base;
 using GDNET.Domain.Entities.System;
@@ -9,6 +10,8 @@ namespace GDNET.Data.Repositories.System
 {
     public class UserRepository : AbstractRepository<User, Guid>, IUserRepository
     {
+        private static readonly User DefaultUser = default(User);
+
         public UserRepository(ISession session)
             : base(session)
         {
@@ -16,11 +19,9 @@ namespace GDNET.Data.Repositories.System
 
         public User FindByEmail(string email)
         {
-            var defaultUser = default(User);
-            string emailProperty = ExpressionAssistant.GetPropertyName(() => defaultUser.Email);
-
-            var listOfUsers = base.FindByProperty(emailProperty, email);
-            return (listOfUsers.Count > 0) ? listOfUsers[0] : null;
+            var emailProperty = ExpressionAssistant.GetPropertyName(() => DefaultUser.Email);
+            var users = base.FindByProperty(new Filter(emailProperty, email));
+            return (users.Items.Length > 0) ? users.Items[0] : null;
         }
     }
 }

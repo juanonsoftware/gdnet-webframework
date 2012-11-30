@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using GDNET.Base;
+using GDNET.Base.Common;
 using GDNET.Base.Utils;
 using GDNET.Data.Base;
 using GreatApp.Domain.Entities;
 using GreatApp.Domain.Repositories;
 using NHibernate;
 using NHibernate.Criterion;
+using Order = NHibernate.Criterion.Order;
 
 namespace GreatApp.Data.Repositories
 {
@@ -19,15 +21,15 @@ namespace GreatApp.Data.Repositories
         {
         }
 
-        public IList<ContentItem> GetAllByAuthor(string createdByEmail)
+        public Page<ContentItem> GetAllByAuthor(string createdByEmail)
         {
-            return base.FindByProperty(EntityWithModificationMeta.CreatedBy, createdByEmail);
+            return base.FindByProperty(new Filter(EntityWithModificationMeta.CreatedBy, createdByEmail));
         }
 
         public IList<ContentItem> GetTopWithActive(int limit)
         {
             var propertyIsActive = ExpressionAssistant.GetPropertyName(() => DefaultContentItem.IsActive);
-            return base.GetTopByProperty(limit, EntityWithModificationMeta.CreatedAt, new List<string> { propertyIsActive }, new List<object> { true });
+            return base.GetTopByProperty(limit, EntityWithModificationMeta.CreatedAt, new Filter(propertyIsActive, true));
         }
 
         public IList<ContentItem> GetTopWithActiveByViews(int limit)
@@ -35,7 +37,7 @@ namespace GreatApp.Data.Repositories
             var propertyViews = ExpressionAssistant.GetPropertyName(() => DefaultContentItem.Views);
             var propertyIsActive = ExpressionAssistant.GetPropertyName(() => DefaultContentItem.IsActive);
 
-            return base.GetAll(limit, Expression.Eq(propertyIsActive, true), new Order(propertyViews, false));
+            return base.GetAll(limit, Restrictions.Eq(propertyIsActive, true), new Order(propertyViews, false));
         }
 
         public IList<ContentItem> GetTopWithActiveByViews(int limit, Guid itemIdExclude)

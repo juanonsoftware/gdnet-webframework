@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GDNET.Base.Common;
 using GDNET.Base.DomainRepository;
 using GreatApp.Domain.Entities;
 
@@ -7,7 +8,7 @@ namespace GreatApp.Domain.Repositories
 {
     public interface IContentItemRepository : IRepositoryBase<ContentItem, Guid>
     {
-        IList<ContentItem> GetAllByAuthor(string createdByEmail);
+        Page<ContentItem> GetAllByAuthor(string createdByEmail);
 
         IList<ContentItem> GetTopWithActive(int limit);
         IList<ContentItem> GetTopWithActiveByViews(int limit);

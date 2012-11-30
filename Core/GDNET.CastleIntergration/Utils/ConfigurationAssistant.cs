@@ -40,9 +40,9 @@ namespace GDNET.CastleIntergration.Utils
 
             if (File.Exists(mappingAssembliesFile))
             {
-                foreach (string line in File.ReadAllLines(mappingAssembliesFile).Where(x => ValidatedLine(x)))
+                foreach (var line in File.ReadAllLines(mappingAssembliesFile).Where(ValidatedLine))
                 {
-                    string assemblyFullPath = Path.Combine(applicationDirectory, line);
+                    var assemblyFullPath = Path.Combine(applicationDirectory, line);
                     var asm = Assembly.LoadFile(assemblyFullPath);
                     var listeMappingTypes = ReflectionAssistant.GetTypesImplementedInterfaceOnAssembly(typeof(IEntityMapping), asm);
                     mapper.AddMappings(listeMappingTypes);

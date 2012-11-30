@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Base\AbstractRepository.cs" />
     <Compile Include="Base\DataSessionContext.cs" />
+    <Compile Include="Base\OrderExtensions.cs" />
     <Compile Include="DataRepositories.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\System\CatalogRepository.cs" />

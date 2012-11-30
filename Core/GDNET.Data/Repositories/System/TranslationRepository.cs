@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using GDNET.Base.Common;
 using GDNET.Base.Utils;
 using GDNET.Data.Base;
 using GDNET.Domain.Entities.System;
@@ -19,12 +20,11 @@ namespace GDNET.Data.Repositories.System
 
         public Translation GetByKeyword(string keyword, CultureInfo culture)
         {
-            string propertyKeyword = ExpressionAssistant.GetPropertyName(() => DefaultTranslation.Keyword);
-            string propertyLanguage = ExpressionAssistant.GetPropertyName(() => DefaultTranslation.Language);
+            var propertyKeyword = ExpressionAssistant.GetPropertyName(() => DefaultTranslation.Keyword);
+            var propertyLanguage = ExpressionAssistant.GetPropertyName(() => DefaultTranslation.Language);
+            var languageCode = culture.Name.Split('-')[0];
 
-            string languageCode = culture.Name.Split('-')[0];
-            var results = this.FindByProperties(new string[] { propertyLanguage, propertyKeyword }, new string[] { languageCode, keyword });
-
+            var results = this.FindByProperties(new Filter(propertyLanguage, languageCode), new Filter(propertyKeyword, keyword));
             return (results.Count == 1) ? results[0] : null;
         }
 

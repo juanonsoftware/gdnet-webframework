@@ -37,6 +37,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\PageInfo.cs" />
+    <Compile Include="Common\Filter.cs" />
+    <Compile Include="Common\Order.cs" />
+    <Compile Include="Common\Page.cs" />
     <Compile Include="DomainAbstraction\AbstractEntityT.cs" />
     <Compile Include="DomainAbstraction\AbstractEntityWithModificationT.cs" />
     <Compile Include="DomainAbstraction\AbstractEntityWithCreationT.cs" />

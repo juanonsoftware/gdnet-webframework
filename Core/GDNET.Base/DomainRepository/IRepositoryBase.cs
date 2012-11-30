@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GDNET.Base.Common;
 using GDNET.Base.DomainAbstraction;
 
 namespace GDNET.Base.DomainRepository
@@ -24,10 +25,7 @@ namespace GDNET.Base.DomainRepository
         /// <summary>
         /// Gets entity from data store by a property.
         /// </summary>
-        /// <param name="propertyName"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        TEntity GetByProperty(string propertyName, object value);
+        TEntity GetByProperty(Filter filter);
 
         /// <summary>
         /// Gets all entities (of TEntity type) from data store.
@@ -37,36 +35,25 @@ namespace GDNET.Base.DomainRepository
         /// <summary>
         /// Gets all entities (of TEntity type) from data store. We ignore paging condition if page & pageSize are equal 0.
         /// </summary>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        /// <param name="totalRows">Total rows by request</param>
-        IList<TEntity> GetAll(int page, int pageSize);
-        IList<TEntity> GetAll(int page, int pageSize, out int totalRows);
+        /// <param name="limit">Limit number of items to be fetched</param>
+        Page<TEntity> GetAll(PageInfo limit);
 
         IList<TEntity> GetTopByProperty(int limit, string orderByProperty);
-        IList<TEntity> GetTopByProperty(int limit, string orderByProperty, IList<string> filterProperties, IList<object> filterValues);
+        IList<TEntity> GetTopByProperty(int limit, string orderByProperty, params Filter[] filters);
 
-        IList<TEntity> FindByProperties(string[] properties, object[] values);
-        IList<TEntity> FindByProperties(string[] properties, object[] values, int page, int pageSize);
+        IList<TEntity> FindByProperties(params Filter[] filters);
+        Page<TEntity> FindByProperties(PageInfo info, params Filter[] filters);
 
         /// <summary>
         /// Retrieves a collection of entities based on the name and value of a property.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        IList<TEntity> FindByProperty(string property, object value);
+        Page<TEntity> FindByProperty(Filter filter);
 
         /// <summary>
         /// Retrieves a collection of entities based on the name and value of a property.
         /// We ignore paging condition if page & pageSize are equal 0.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        IList<TEntity> FindByProperty(string property, object value, int page, int pageSize);
+        Page<TEntity> FindByProperty(Filter filter, PageInfo page);
 
         /// <summary>
         /// Retrieves a collection of entities based on the name and values of a property.
@@ -79,40 +66,13 @@ namespace GDNET.Base.DomainRepository
         /// <summary>
         /// Retrieves a collection of entities based on the name and value of a property.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        IList<TEntity> FindByProperty(string property, object value, string orderByProperty);
-
-        /// <summary>
-        /// Retrieves a collection of entities based on the name and value of a property.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        IList<TEntity> FindByProperty(string property, object value, string orderByProperty, bool isAsc);
+        IList<TEntity> FindByProperty(Filter filter, Order order);
 
         /// <summary>
         /// Retrieves a collection of entities based on the name and value of a property.
         /// We ignore paging condition if page & pageSize are equal 0.
         /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        IList<TEntity> FindByProperty(string property, object value, string orderByProperty, int page, int pageSize);
-
-        /// <summary>
-        /// Retrieves a collection of entities based on the name and value of a property.
-        /// We ignore paging condition if page & pageSize are equal 0.
-        /// </summary>
-        /// <typeparam name="TEntity">The type of entities to retrieve.</typeparam>
-        /// <param name="property">The name of the property; should be a member of type TEntity.</param>
-        /// <param name="value">The value of the property.</param>
-        /// <param name="page">Zero base page</param>
-        /// <param name="pageSize">Number of item per each page</param>
-        IList<TEntity> FindByProperty(string property, object value, string orderByProperty, bool isAsc, int page, int pageSize);
+        IList<TEntity> FindByProperty(Filter filter, Order order, PageInfo paging);
 
         /// <summary>
         /// Save an entity to data store.
